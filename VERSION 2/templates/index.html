@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimización de Rutas Cafetaleras - Amazonas</title>
+
+    <!-- Hojas de Estilo de Leaflet (Para el Mapa) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            background-color: #f4f6f9;
+            overflow: hidden;
+        }
+
+        /* Contenedor del panel de control izquierdo */
+        #panel-control {
+            width: 400px;
+            min-width: 400px;
+            background-color: #ffffff;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            z-index: 1000;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        /* Contenedor del mapa derecho con dimensiones explícitas aseguradas */
+        #mapa-container {
+            flex: 1;
+            position: relative;
+            height: 100%;
+            background-color: #e5e9f0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        h2,
+        h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            font-size: 1.4rem;
+        }
+
+        .seccion {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccd1d9;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Contenedor de la lista de fincas */
+        #lista-fincas {
+            max-height: 200px;
+            border: 1px solid #e6e9ed;
+            border-radius: 6px;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+
+        .finca-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .finca-item input {
+            margin-right: 10px;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        /* Estilos de la tabla comparativa de resultados */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #e6e9ed;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f3f5;
+        }
+
+        .badge-manual {
+            background-color: #e67e22;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge-google {
+            background-color: #4285f4;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Estilo flotante para los turnos de visita encima de los pines */
+        .badge-orden {
+            background-color: #2c3e50 !important;
+            color: white !important;
+            border: 1px solid #1a252f !important;
+            border-radius: 4px !important;
+            padding: 2px 6px !important;
+            font-weight: bold !important;
+            font-size: 0.8rem !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PANEL DE CONTROL IZQUIERDO -->
+    <div id="panel-control">
+        <div class="seccion">
+            <h2>Configuración Logística</h2>
+            <label for="selector-kml">Seleccionar Provincia:</label>
+            <select id="selector-kml">
+                <option value="">-- Seleccione una zona --</option>
+                <option value="PUNTOS CHACHAPOYAS.kml">Chachapoyas</option>
+                <option value="PUNTOS BAGUA.kml">Bagua</option>
+                <option value="PUNTOS BONGARA.kml">Bongará</option>
+                <option value="PUNTOS LUYA.kml">Luya</option>
+                <option value="PUNTOS RODRIGUEZ DE MENDOZA.kml">Rodríguez de Mendoza</option>
+                <option value="PUNTOS UCTUBAMBA.kml">Utcubamba</option>
+            </select>
+        </div>
+
+        <div class="seccion">
+            <h3>Fincas Detectadas</h3>
+            <p style="font-size: 0.85rem; color: #7f8c8d; margin-bottom: 10px;">
+                * El primer punto seleccionado será considerado el punto de partida (Empresa/Centro de acopio).
+            </p>
+            <div id="lista-fincas">
+                <p style="color: #95a5a6; font-style: italic;">Selecciona una provincia para cargar las fincas...</p>
+            </div>
+        </div>
+
+        <button id="btn-calcular" style="margin-top: 10px;">⚡ Calcular Ruta Óptima</button>
+
+        <div class="seccion" style="margin-top: 25px;">
+            <h2>Cuadro de Resultados</h2>
+            <div id="resultados-tabla">
+                <p style="color: #95a5a6; font-style: italic;">Esperando ejecución del modelo...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAPA DERECHO -->
+    <div id="mapa-container">
+        <div id="map"></div>
+    </div>
+
+    <!-- Librería de JavaScript de Leaflet (Para manejo del mapa) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Enlace a nuestro script de control -->
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

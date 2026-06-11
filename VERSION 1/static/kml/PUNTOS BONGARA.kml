@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PUNTOS BONGARA.kml</name>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Folder>
+		<name>PUNTOS BONGARA</name>
+		<Placemark>
+			<name>Empresa 3</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T12:02:39.446413993Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.79823202214425</longitude>
+				<latitude>-5.903849357035958</latitude>
+				<altitude>0</altitude>
+				<heading>-10.64704730738337</heading>
+				<tilt>55.94125291061373</tilt>
+				<range>298.7332810742678</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.79845948835272,-5.904427379821203,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 1(Churuja)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.93958629294453</longitude>
+				<latitude>-6.034373210211909</latitude>
+				<altitude>0</altitude>
+				<heading>0.0002200817078529591</heading>
+				<tilt>55.27394299304656</tilt>
+				<range>340.4355822382317</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.93969857091695,-6.034757556465842,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 2(Corosha)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.82789472062494</longitude>
+				<latitude>-5.819924221568833</latitude>
+				<altitude>0</altitude>
+				<heading>0.001670688431240657</heading>
+				<tilt>41.46058157048464</tilt>
+				<range>416.5061555910967</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.82874428139753,-5.82066566956814,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 3(Cuispes)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.9426349153112</longitude>
+				<latitude>-5.927453579972886</latitude>
+				<altitude>0</altitude>
+				<heading>-0.000611049142691464</heading>
+				<tilt>47.65157056302507</tilt>
+				<range>226.6579633283568</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.94257691894911,-5.927833485863205,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 4(Florida)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.91466680105711</longitude>
+				<latitude>-5.833455427803991</latitude>
+				<altitude>0</altitude>
+				<heading>-0.0009566963347428287</heading>
+				<tilt>60.00133856938397</tilt>
+				<range>172.0982848051663</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.91494793950378,-5.833896030503531,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 5(Jazan)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.98063636665337</longitude>
+				<latitude>-5.937698270152313</latitude>
+				<altitude>0</altitude>
+				<heading>3.322394560009216</heading>
+				<tilt>59.87562851186079</tilt>
+				<range>287.7981978779263</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.98109396408989,-5.938330706784707,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 6(San Carlos)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.94567972508879</longitude>
+				<latitude>-5.964869165462932</latitude>
+				<altitude>0</altitude>
+				<heading>0.01061854735796447</heading>
+				<tilt>40.26273159573554</tilt>
+				<range>453.9319897376879</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.94653366732594,-5.965313484143746,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 7(Shipasbamba)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.98105979783269</longitude>
+				<latitude>-5.909671628371412</latitude>
+				<altitude>0</altitude>
+				<heading>0.004379994960380228</heading>
+				<tilt>48.18179604137055</tilt>
+				<range>526.0618459977512</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.98151637539137,-5.910952405460224,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 8(Valera)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.91938748000111</longitude>
+				<latitude>-6.042567786962906</latitude>
+				<altitude>0</altitude>
+				<heading>0.01234349435474482</heading>
+				<tilt>59.12270691836943</tilt>
+				<range>255.8987932114321</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.91955266206814,-6.042570702195857,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 9(Yambrasbamba)</name>
+			<LookAt>
+				<gx:TimeStamp><when>2026-04-30T18:23:29.034164428Z</when>
+</gx:TimeStamp>
+				<gx:ViewerOptions>
+					<gx:option enabled="0" name="historicalimagery"></gx:option>
+					<gx:option name="sunlight"></gx:option>
+					<gx:option enabled="0" name="streetview"></gx:option>
+				</gx:ViewerOptions>
+				<longitude>-77.90586903679416</longitude>
+				<latitude>-5.741064009528738</latitude>
+				<altitude>0</altitude>
+				<heading>-0.0003638191192763485</heading>
+				<tilt>60.00184203563541</tilt>
+				<range>236.8419782841723</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.90545990515506,-5.741803068046804,0</coordinates>
+			</Point>
+		</Placemark>
+		<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.7.1155"></atom:link>
+	</Folder>
+</Document>
+</kml>

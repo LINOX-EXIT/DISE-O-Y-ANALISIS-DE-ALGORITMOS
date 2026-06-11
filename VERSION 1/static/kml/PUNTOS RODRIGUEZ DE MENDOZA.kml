@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PUNTOS RODRIGUEZ DE MENDOZA.kml</name>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Folder>
+		<name>PUNTOS RODRIGUEZ DE MENDOZA</name>
+		<Placemark>
+			<name>Empresa 5</name>
+			<LookAt>
+				<longitude>-77.48570111873205</longitude>
+				<latitude>-6.393891142851023</latitude>
+				<altitude>0</altitude>
+				<heading>-9.596942249833123</heading>
+				<tilt>30.0005250650554</tilt>
+				<range>116.8797145641129</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.4856480950982,-6.393975885372538,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 1(Chirimoto)</name>
+			<LookAt>
+				<longitude>-77.44547460252365</longitude>
+				<latitude>-6.515167462087959</latitude>
+				<altitude>0</altitude>
+				<heading>-0.01076957532664746</heading>
+				<tilt>41.89543409385644</tilt>
+				<range>508.1298236912994</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.44598424558411,-6.516554901346861,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 2(Cochamal)</name>
+			<LookAt>
+				<longitude>-77.57767971403295</longitude>
+				<latitude>-6.408777738884701</latitude>
+				<altitude>0</altitude>
+				<heading>-7.206742634553807e-05</heading>
+				<tilt>23.72771521770184</tilt>
+				<range>113.0958237155835</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.57777404220171,-6.408722901459397,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 3(Huambo)</name>
+			<LookAt>
+				<longitude>-77.53730302877018</longitude>
+				<latitude>-6.428786224487131</latitude>
+				<altitude>0</altitude>
+				<heading>25.49395348187364</heading>
+				<tilt>10.04012188603776</tilt>
+				<range>179.490498812964</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.53748552739566,-6.428931175963961,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 4(Limabamba)</name>
+			<LookAt>
+				<longitude>-77.49837435211518</longitude>
+				<latitude>-6.497948655109664</latitude>
+				<altitude>0</altitude>
+				<heading>7.454181437211757</heading>
+				<tilt>25.69349805388815</tilt>
+				<range>125.0398862096827</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.49827244764404,-6.498024092256434,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 5(Longar)</name>
+			<LookAt>
+				<longitude>-77.54622454085677</longitude>
+				<latitude>-6.385324820737922</latitude>
+				<altitude>0</altitude>
+				<heading>-1.610771827955013</heading>
+				<tilt>3.324043515155653</tilt>
+				<range>149.9874429095686</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.54625508633573,-6.3851765239454,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 6(Mariscal)</name>
+			<LookAt>
+				<longitude>-77.50414170310815</longitude>
+				<latitude>-6.386649341433569</latitude>
+				<altitude>0</altitude>
+				<heading>-2.36281491163709</heading>
+				<tilt>1.772173906378574</tilt>
+				<range>158.257581550988</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.50438735361575,-6.386524801020433,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 7(Milpuc)</name>
+			<LookAt>
+				<longitude>-77.41114452415187</longitude>
+				<latitude>-6.493471721243123</latitude>
+				<altitude>0</altitude>
+				<heading>-1.533362204434163</heading>
+				<tilt>22.32676234240985</tilt>
+				<range>291.4731491269965</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.41112870205338,-6.493957380608899,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 8(Omia)</name>
+			<LookAt>
+				<longitude>-77.39582147355169</longitude>
+				<latitude>-6.468108150332545</latitude>
+				<altitude>0</altitude>
+				<heading>-1.416786820136241</heading>
+				<tilt>16.10801964354452</tilt>
+				<range>161.8039516872921</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.39621970272465,-6.467895801486977,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 9(Santa Rosa)</name>
+			<LookAt>
+				<longitude>-77.456270556479</longitude>
+				<latitude>-6.453193362162337</latitude>
+				<altitude>0</altitude>
+				<heading>-2.952161129311941</heading>
+				<tilt>0</tilt>
+				<range>446.6798379984157</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.4557037007739,-6.453221856282854,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 9(Totora)</name>
+			<LookAt>
+				<longitude>-77.47152252078895</longitude>
+				<latitude>-6.492808284702561</latitude>
+				<altitude>0</altitude>
+				<heading>0.1051094047560329</heading>
+				<tilt>5.415259963231075</tilt>
+				<range>154.6893078781019</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.47176830022667,-6.492554981167712,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 10(Vista Alegre)</name>
+			<LookAt>
+				<longitude>-77.30338508390649</longitude>
+				<latitude>-6.150436608027037</latitude>
+				<altitude>0</altitude>
+				<heading>78.5428109527702</heading>
+				<tilt>25.21979832071197</tilt>
+				<range>175.5783259215682</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.30353615209602,-6.150677411664107,0</coordinates>
+			</Point>
+		</Placemark>
+		<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.7.1155"></atom:link>
+	</Folder>
+</Document>
+</kml>

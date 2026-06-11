@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PUNTOS LUYA.kml</name>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Folder>
+		<name>PUNTOS LUYA</name>
+		<Placemark>
+			<name>Empresa 4</name>
+			<LookAt>
+				<longitude>-77.94430750688734</longitude>
+				<latitude>-6.164449510617332</latitude>
+				<altitude>0</altitude>
+				<heading>-85.85675318482254</heading>
+				<tilt>15.17990047900663</tilt>
+				<range>226.5255839029427</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.9442411666852,-6.164286403805117,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 1(Camporredondo)</name>
+			<LookAt>
+				<longitude>-78.32061053879082</longitude>
+				<latitude>-6.215370841872677</latitude>
+				<altitude>0</altitude>
+				<heading>0.1183468071750382</heading>
+				<tilt>8.707824150632504</tilt>
+				<range>120.4944879384963</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.32055636945749,-6.215424722528664,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 2(Cocabamba)</name>
+			<LookAt>
+				<longitude>-78.00496973438716</longitude>
+				<latitude>-6.613968548291883</latitude>
+				<altitude>0</altitude>
+				<heading>-35.71915315977465</heading>
+				<tilt>46.87337517022825</tilt>
+				<range>155.9333038752998</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.00491931114207,-6.614163578573132,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 3(Colcamar)</name>
+			<LookAt>
+				<longitude>-77.97311763012286</longitude>
+				<latitude>-6.299322583122522</latitude>
+				<altitude>0</altitude>
+				<heading>-4.040272057698113e-05</heading>
+				<tilt>25.45947288217604</tilt>
+				<range>286.4190730944558</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.97310694625871,-6.299368705426855,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 4(Conila)</name>
+			<LookAt>
+				<longitude>-78.01917539650154</longitude>
+				<latitude>-6.187188683212499</latitude>
+				<altitude>0</altitude>
+				<heading>0.3530278727979316</heading>
+				<tilt>31.46434582384878</tilt>
+				<range>132.3879212364849</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.01916985623436,-6.187122366323707,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 5(Lonya Chico)</name>
+			<LookAt>
+				<longitude>-77.95490213912204</longitude>
+				<latitude>-6.229407856330344</latitude>
+				<altitude>0</altitude>
+				<heading>-80.77778361342004</heading>
+				<tilt>8.380054180506676</tilt>
+				<range>191.8105579875495</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.95516510055272,-6.229338542627077,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 6(Ocalli)</name>
+			<LookAt>
+				<longitude>-78.27064515233889</longitude>
+				<latitude>-6.237572168212386</latitude>
+				<altitude>0</altitude>
+				<heading>89.58068491834561</heading>
+				<tilt>1.240293133886663</tilt>
+				<range>166.3609768489237</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.2707200797964,-6.237386760873135,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 7(Pisuquia)</name>
+			<LookAt>
+				<longitude>-78.02932048604131</longitude>
+				<latitude>-6.548228323324592</latitude>
+				<altitude>0</altitude>
+				<heading>-15.81802437173498</heading>
+				<tilt>0.05264349695490973</tilt>
+				<range>196.1071697004078</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.02962787703979,-6.548332790563006,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 8(Ocumal)</name>
+			<LookAt>
+				<longitude>-78.11613671166326</longitude>
+				<latitude>-6.418541368198137</latitude>
+				<altitude>0</altitude>
+				<heading>-91.75301970026423</heading>
+				<tilt>14.05719709463355</tilt>
+				<range>293.6845136422202</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.11599803444005,-6.418819586412339,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 9(Providencia)</name>
+			<LookAt>
+				<longitude>-78.24000734051464</longitude>
+				<latitude>-6.297315377261742</latitude>
+				<altitude>0</altitude>
+				<heading>10.21475885406577</heading>
+				<tilt>41.44065900241762</tilt>
+				<range>456.4314542918336</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.23954808269824,-6.298038211363949,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 10(San Cristobal)</name>
+			<LookAt>
+				<longitude>-78.18948357556613</longitude>
+				<latitude>-5.839963921482883</latitude>
+				<altitude>0</altitude>
+				<heading>-8.278572166320336e-06</heading>
+				<tilt>35.51495141971584</tilt>
+				<range>380.6832832593176</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.18964616487177,-5.840402341576163,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 11(Sam Jeronimo)</name>
+			<LookAt>
+				<longitude>-77.99627884295427</longitude>
+				<latitude>-5.993693365694001</latitude>
+				<altitude>0</altitude>
+				<heading>0.2355986639283598</heading>
+				<tilt>0</tilt>
+				<range>222.3350661229757</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.99646703995668,-5.993682069872703,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 12(Santa Catalina)</name>
+			<LookAt>
+				<longitude>-78.06131610521876</longitude>
+				<latitude>-6.11339199542412</latitude>
+				<altitude>0</altitude>
+				<heading>165.6921746519179</heading>
+				<tilt>33.93116496707765</tilt>
+				<range>202.4025207345925</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.06099353574473,-6.113130094024435,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 13(Tingo)</name>
+			<LookAt>
+				<longitude>-77.9087012042953</longitude>
+				<latitude>-6.371790786311776</latitude>
+				<altitude>0</altitude>
+				<heading>0.8118530195508321</heading>
+				<tilt>0.4676230131369133</tilt>
+				<range>226.5452751496315</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-77.90909215812744,-6.371704873227615,0</coordinates>
+			</Point>
+		</Placemark>
+		<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.7.1155"></atom:link>
+	</Folder>
+</Document>
+</kml>

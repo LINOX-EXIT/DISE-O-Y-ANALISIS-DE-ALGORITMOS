@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PUNTOS UCTUBAMBA.kml</name>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Folder>
+		<name>PUNTOS UCTUBAMBA</name>
+		<Placemark>
+			<name>Empresa 6</name>
+			<LookAt>
+				<longitude>-78.44017087388457</longitude>
+				<latitude>-5.754821054180981</latitude>
+				<altitude>0</altitude>
+				<heading>-7.980562957562834e-05</heading>
+				<tilt>26.07980724947234</tilt>
+				<range>185.4781243027575</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.44041527561585,-5.754963380051419,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 1(Lonya Grande)</name>
+			<LookAt>
+				<longitude>-78.42274538219904</longitude>
+				<latitude>-6.096063090035615</latitude>
+				<altitude>0</altitude>
+				<heading>-8.262471034027575</heading>
+				<tilt>0</tilt>
+				<range>313.2821421280355</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.4224954502111,-6.096301547755565,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 2(Yamon)</name>
+			<LookAt>
+				<longitude>-78.53967757991691</longitude>
+				<latitude>-6.010741175768102</latitude>
+				<altitude>0</altitude>
+				<heading>28.0771897683408</heading>
+				<tilt>13.8687279781354</tilt>
+				<range>263.3757932071333</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.53969051279361,-6.010835133516293,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 3(Cumba)</name>
+			<LookAt>
+				<longitude>-78.66390187834919</longitude>
+				<latitude>-5.934926224226579</latitude>
+				<altitude>0</altitude>
+				<heading>-4.367295723959095</heading>
+				<tilt>29.86344620750082</tilt>
+				<range>289.6841922759892</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.66399617324043,-5.935111056720106,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 4(El Milagro)</name>
+			<LookAt>
+				<longitude>-78.5585072507353</longitude>
+				<latitude>-5.637610645109436</latitude>
+				<altitude>0</altitude>
+				<heading>-1.116640377048133</heading>
+				<tilt>22.25253733676027</tilt>
+				<range>287.1816784644895</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.5583963592198,-5.637553139072621,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 5(Jamalca)</name>
+			<LookAt>
+				<longitude>-78.25751874540205</longitude>
+				<latitude>-5.863229765802254</latitude>
+				<altitude>0</altitude>
+				<heading>-7.552987331508527</heading>
+				<tilt>35.56386612403845</tilt>
+				<range>140.3105276944394</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.2575442397474,-5.863595018752807,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Finca 6(Cajaruro)</name>
+			<LookAt>
+				<longitude>-78.42665034217775</longitude>
+				<latitude>-5.735738323509525</latitude>
+				<altitude>0</altitude>
+				<heading>-18.34480437054188</heading>
+				<tilt>18.90370282948556</tilt>
+				<range>250.1816771531179</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-78.42651846254411,-5.735728630677607,0</coordinates>
+			</Point>
+		</Placemark>
+		<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.7.1155"></atom:link>
+	</Folder>
+</Document>
+</kml>
