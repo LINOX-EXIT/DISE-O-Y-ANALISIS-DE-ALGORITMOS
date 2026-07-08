@@ -9,7 +9,8 @@ from core_logistica import (
     obtener_matriz_osrm_metros,
     algoritmo_voraz,
     algoritmo_fuerza_bruta,
-    algoritmo_dinamico
+    algoritmo_dinamico,
+    algoritmo_backtracking
 )
 
 # Importaciones para Google OR-Tools
@@ -44,6 +45,40 @@ def obtener_geometria_ruta_real(puntos_ordenados):
     except Exception as e:
         print(f"Error al obtener geometría de carretera desde OSRM: {e}")
         return []
+
+# --- MERGE SORT PARA ORDENAR RESULTADOS EN EL BACKEND ---
+def merge_sort_resultados(arr):
+    if len(arr) <= 1:
+        return arr
+        
+    mid = len(arr) // 2
+    left = merge_sort_resultados(arr[:mid])
+    right = merge_sort_resultados(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        val_l = left[i].get('distancia_km')
+        val_r = right[j].get('distancia_km')
+        
+        # Considerar valores no numéricos (ej. "N/A") como infinitos
+        num_l = val_l if isinstance(val_l, (int, float)) else float('inf')
+        num_r = val_r if isinstance(val_r, (int, float)) else float('inf')
+        
+        if num_l <= num_r:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+            
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
 
 # --- FUNCIÓN INTERNA PARA GOOGLE OR-TOOLS ---
 def resolver_google_ortools(matriz_metros, punto_inicio):
@@ -118,6 +153,14 @@ def calcular_ruta():
     else:
         r_fb, d_fb_m, t_fb = None, None, None  # Protegemos la CPU si son muchos puntos
 
+    # Backtracking (Controlamos hasta 12 puntos)
+    if len(puntos_seleccionados) <= 12:
+        t0 = time.time()
+        r_bt, d_bt_m = algoritmo_backtracking(matriz_m, inicio_idx)
+        t_bt = time.time() - t0
+    else:
+        r_bt, d_bt_m, t_bt = None, None, None
+
     # Programación Dinámica
     t0 = time.time()
     r_pd, d_pd_m = algoritmo_dinamico(matriz_m, inicio_idx)
@@ -180,6 +223,13 @@ def calcular_ruta():
                 'ruta_indices': r_pd
             },
             {
+                'proveedor': 'MANUAL',
+                'algoritmo': 'Backtracking (Poda)',
+                'distancia_km': round(d_bt_m / 1000, 2) if isinstance(d_bt_m, (int, float)) else "N/A (+12 puntos)",
+                'tiempo_seg': round(t_bt, 6) if isinstance(t_bt, (int, float)) else "N/A",
+                'ruta_indices': r_bt
+            },
+            {
                 'proveedor': 'GOOGLE',
                 'algoritmo': 'Voraz + Búsqueda Local (GLS)',
                 'distancia_km': round(d_go_m / 1000, 2) if d_go_m else None,
@@ -191,6 +241,9 @@ def calcular_ruta():
         'mejor_ruta_indices': mejor_ruta_indices,
         'tramos_info': tramos_info
     }
+
+    # Ordenar los resultados de menor a mayor distancia usando nuestro MERGE SORT
+    respuesta['comparativa'] = merge_sort_resultados(respuesta['comparativa'])
 
     return jsonify(respuesta)
 

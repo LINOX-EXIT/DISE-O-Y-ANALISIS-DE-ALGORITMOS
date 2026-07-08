@@ -84,3 +84,43 @@ def algoritmo_dinamico(matriz, inicio):
         memo[(mask, pos)] = (res, camino)
         return res, camino
     return visitar(1 << inicio, inicio)[1], visitar(1 << inicio, inicio)[0]
+
+# --- D. BACKTRACKING CON PODA ---
+def algoritmo_backtracking(matriz, inicio):
+    n = len(matriz)
+    mejor_distancia = [float('inf')]
+    mejor_ruta = []
+    
+    def backtrack(nodo_actual, visitados, ruta_actual, dist_actual):
+        # PODA: Si la distancia actual ya es mayor o igual a la mejor, cortamos esta rama
+        if dist_actual >= mejor_distancia[0]:
+            return
+            
+        # Caso base: todos visitados, volvemos al inicio
+        if len(visitados) == n:
+            dist_final = dist_actual + matriz[nodo_actual][inicio]
+            if dist_final < mejor_distancia[0]:
+                mejor_distancia[0] = dist_final
+                # Guardamos una copia de la ruta + el regreso al inicio
+                mejor_ruta.clear()
+                mejor_ruta.extend(ruta_actual + [inicio])
+            return
+            
+        # Caso recursivo: intentar visitar nodos no visitados
+        for siguiente in range(n):
+            if siguiente not in visitados:
+                visitados.add(siguiente)
+                ruta_actual.append(siguiente)
+                
+                backtrack(siguiente, visitados, ruta_actual, dist_actual + matriz[nodo_actual][siguiente])
+                
+                # Deshacer el cambio (backtrack)
+                ruta_actual.pop()
+                visitados.remove(siguiente)
+                
+    # Inicializamos la búsqueda desde el nodo de inicio
+    visitados_ini = set([inicio])
+    ruta_ini = [inicio]
+    backtrack(inicio, visitados_ini, ruta_ini, 0)
+    
+    return mejor_ruta, mejor_distancia[0]

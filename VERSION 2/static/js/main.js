@@ -352,3 +352,91 @@ document.getElementById('btn-calcular').addEventListener('click', function () {
             }
         });
 });
+
+// --- ALGORITMOS DE BÚSQUEDA Y ORDENAMIENTO (FRONTEND) ---
+
+// 1. Merge Sort: Ordena un arreglo de fincas alfabéticamente por su nombre
+function mergeSortFincas(arr) {
+    if (arr.length <= 1) return arr;
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSortFincas(arr.slice(0, mid));
+    const right = mergeSortFincas(arr.slice(mid));
+    return mergeFincas(left, right);
+}
+
+function mergeFincas(left, right) {
+    let result = [];
+    let i = 0; let j = 0;
+    while (i < left.length && j < right.length) {
+        if (left[i].nombre.toLowerCase() < right[j].nombre.toLowerCase()) {
+            result.push(left[i]);
+            i++;
+        } else {
+            result.push(right[j]);
+            j++;
+        }
+    }
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}
+
+// 2. Búsqueda Binaria: Busca una finca por nombre en un arreglo ordenado
+function busquedaBinariaFincas(arrOrdenado, textoBuscado) {
+    let inicio = 0;
+    let fin = arrOrdenado.length - 1;
+    let textoLower = textoBuscado.toLowerCase();
+    
+    while (inicio <= fin) {
+        let medio = Math.floor((inicio + fin) / 2);
+        let nombreMedio = arrOrdenado[medio].nombre.toLowerCase();
+        
+        // Comprobación de coincidencia exacta o parcial al inicio
+        if (nombreMedio.includes(textoLower)) {
+            return arrOrdenado[medio];
+        }
+        
+        if (nombreMedio < textoLower) {
+            inicio = medio + 1;
+        } else {
+            fin = medio - 1;
+        }
+    }
+    
+    // Si no encuentra coincidencia con la lógica estricta, intentamos un fallback lineal parcial
+    // (Útil porque el usuario podría escribir "maria" para "Finca Maria")
+    return arrOrdenado.find(f => f.nombre.toLowerCase().includes(textoLower));
+}
+
+// 3. Evento del botón de búsqueda
+document.getElementById('btn-buscar').addEventListener('click', function() {
+    const texto = document.getElementById('input-busqueda').value.trim();
+    if (!texto) {
+        alert("Ingresa un nombre para buscar.");
+        return;
+    }
+    
+    if (todasLasFincas.length === 0) {
+        alert("Primero selecciona una provincia para cargar las fincas.");
+        return;
+    }
+    
+    // a. Ordenamos la copia de todas las fincas usando Merge Sort nativo
+    const fincasCopia = [...todasLasFincas];
+    const fincasOrdenadas = mergeSortFincas(fincasCopia);
+    
+    // b. Buscamos la finca usando Búsqueda Binaria
+    const fincaEncontrada = busquedaBinariaFincas(fincasOrdenadas, texto);
+    
+    if (fincaEncontrada) {
+        // Encontrar su índice real original para ubicar el marcador visual en Leaflet
+        const indexReal = todasLasFincas.findIndex(f => f.nombre === fincaEncontrada.nombre);
+        if (indexReal !== -1 && listaMarcadoresInstancias[indexReal]) {
+            // Zoom hacia la finca y mostrar su popup
+            map.flyTo([fincaEncontrada.lat, fincaEncontrada.lng], 16, { duration: 1.5 });
+            setTimeout(() => {
+                listaMarcadoresInstancias[indexReal].openPopup();
+            }, 1500);
+        }
+    } else {
+        alert("No se encontró ninguna finca con ese nombre.");
+    }
+});
