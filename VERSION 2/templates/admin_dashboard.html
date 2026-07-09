@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMS Amazonas - Panel de Administración</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}?v=2">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1200px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .header h1 { color: #2c3e50; margin: 0; display: flex; align-items: center; gap: 10px;}
+        
+        .nav-links a { background: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        
+        /* Tabs Styles */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { background: #ecf0f1; border: none; padding: 15px 25px; font-size: 1rem; cursor: pointer; border-radius: 8px 8px 0 0; font-weight: bold; color: #7f8c8d; transition: 0.3s; }
+        .tab-btn:hover { background: #bdc3c7; }
+        .tab-btn.active { background: #3498db; color: white; }
+        
+        .tab-content { display: none; background: white; padding: 25px; border-radius: 0 8px 8px 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .tab-content.active { display: block; }
+        
+        /* Shared Styles */
+        h2 { margin-top: 0; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #7f8c8d; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-submit { background: #2ecc71; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-edit { background: #f39c12; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; }
+        .btn-delete { background: #e74c3c; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
+        .badge-progreso { background-color: #f39c12; }
+        .badge-finalizado { background-color: #27ae60; }
+        .badge-admin { background-color: #e74c3c; }
+        .badge-cond { background-color: #3498db; }
+        .badge-desp { background-color: #9b59b6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><img src="{{ url_for('static', filename='img/icono.png') }}" style="height: 40px; border-radius: 5px;"> Panel Estratégico de Administración</h1>
+            <div class="nav-links">
+                <a href="/logout">Cerrar Sesión</a>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-monitoreo')">📡 Monitoreo de Viajes</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-usuarios')">👥 Gestión de Usuarios</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-flota')">🚚 Flota y Combustible</button>
+        </div>
+
+        <!-- PESTAÑA 1: MONITOREO -->
+        <div id="tab-monitoreo" class="tab-content active">
+            <h2>Historial y Actividad en Tiempo Real</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conductor</th>
+                        <th>Vehículo</th>
+                        <th>Fecha</th>
+                        <th>Carga (Kg)</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-viajes">
+                    <tr><td colspan="7" style="text-align: center;">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PESTAÑA 2: USUARIOS -->
+        <div id="tab-usuarios" class="tab-content">
+            <h2>Gestión de Personal</h2>
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h3 id="form-user-title" style="margin-top: 0;">Añadir Nuevo Usuario</h3>
+                <form id="form-usuario" onsubmit="guardarUsuario(event)" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items: end;">
+                    <input type="hidden" id="u-id">
+                    <div>
+                        <label>Nombre Completo:</label>
+                        <input type="text" id="u-nombre" required placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div>
+                        <label>Usuario (Login):</label>
+                        <input type="text" id="u-username" required>
+                    </div>
+                    <div>
+                        <label>Contraseña:</label>
+                        <input type="password" id="u-password" placeholder="Dejar vacío para no cambiar">
+                    </div>
+                    <div>
+                        <label>Rol:</label>
+                        <select id="u-rol" required>
+                            <option value="Admin">Administrador</option>
+                            <option value="Despachador">Despachador</option>
+                            <option value="Conductor">Conductor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-submit" id="btn-save-user">Guardar</button>
+                        <button type="button" class="btn-delete" style="display:none;" id="btn-cancel-user" onclick="resetUserForm()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Completo</th>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-usuarios"></tbody>
+            </table>
+        </div>
+
+        <!-- PESTAÑA 3: FLOTA Y PRECIOS -->
+        <div id="tab-flota" class="tab-content">
+            <div style="display: flex; gap: 20px;">
+                <div style="flex: 1;">
+                    <h2>Precios de Combustible</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Petróleo (S/ galón):</label>
+                            <div style="display: flex; gap: 5px;">
+                                <input type="number" id="precio-petroleo" step="0.1">
+                                <button class="btn-submit" onclick="actualizarPrecio('Petroleo', 'precio-petroleo')">Actualizar</button>
+                            </div>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Gasolina (S/ galón):</label>
+                            <div style="display: flex; gap: 5px;">
+                                <input type="number" id="precio-gasolina" step="0.1">
+                                <button class="btn-submit" onclick="actualizarPrecio('Gasolina', 'precio-gasolina')">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 2; background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <h2 style="margin-top: 0;">Registrar Nuevo Vehículo</h2>
+                    <form id="form-vehiculo" onsubmit="registrarVehiculo(event)" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <div class="form-group" style="flex: 1; min-width: 120px;"><label>Marca:</label><input type="text" id="v-marca" required></div>
+                        <div class="form-group" style="flex: 1; min-width: 120px;"><label>Modelo:</label><input type="text" id="v-modelo" required></div>
+                        <div class="form-group" style="flex: 1; min-width: 120px;"><label>Placa:</label><input type="text" id="v-placa" required style="text-transform: uppercase;"></div>
+                        <div class="form-group" style="flex: 1; min-width: 100px;"><label>Cap. (Kg):</label><input type="number" id="v-capacidad" required></div>
+                        <div class="form-group" style="flex: 1; min-width: 120px;"><label>Consumo/Km:</label><input type="number" id="v-consumo" step="0.01" required></div>
+                        <div class="form-group" style="flex: 1; min-width: 120px;">
+                            <label>Combustible:</label>
+                            <select id="v-combustible" required>
+                                <option value="Petroleo">Petróleo</option>
+                                <option value="Gasolina">Gasolina</option>
+                            </select>
+                        </div>
+                        <div style="flex: 100%; text-align: right;"><button type="submit" class="btn-submit">➕ Registrar</button></div>
+                    </form>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 20px;">Flota Registrada</h2>
+            <table id="tabla-vehiculos">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Marca</th><th>Modelo</th><th>Placa</th><th>Capacidad (Kg)</th><th>Cons. (Gal/Km)</th><th>Combustible</th><th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // TAB LOGIC
+        function switchTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            
+            if(tabId === 'tab-monitoreo') cargarViajes();
+            else if(tabId === 'tab-usuarios') cargarUsuarios();
+            else if(tabId === 'tab-flota') cargarFlota();
+        }
+
+        // --- MONITOREO ---
+        function cargarViajes() {
+            fetch('/api/viajes')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbody-viajes');
+                tbody.innerHTML = '';
+                if(!data.viajes || data.viajes.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No hay viajes registrados</td></tr>';
+                    return;
+                }
+                
+                data.viajes.forEach(v => {
+                    const badgeClass = v.estado === 'en_progreso' ? 'badge-progreso' : 'badge-finalizado';
+                    const estadoText = v.estado === 'en_progreso' ? 'En Progreso' : 'Finalizado';
+                    
+                    const inicio = v.hora_inicio ? new Date(v.hora_inicio).toLocaleTimeString() : '-';
+                    const fin = v.hora_fin ? new Date(v.hora_fin).toLocaleTimeString() : '-';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><b>${v.conductor_nombre || v.conductor_username}</b></td>
+                            <td>${v.vehiculo_marca} ${v.vehiculo_modelo} [${v.vehiculo_placa}]</td>
+                            <td>${v.fecha}</td>
+                            <td>${v.kg_totales} kg</td>
+                            <td>${inicio}</td>
+                            <td>${fin}</td>
+                            <td><span class="badge ${badgeClass}">${estadoText}</span></td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        // --- USUARIOS ---
+        function cargarUsuarios() {
+            fetch('/api/usuarios')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbody-usuarios');
+                tbody.innerHTML = '';
+                data.usuarios.forEach(u => {
+                    let badge = 'badge-admin';
+                    if(u.rol === 'Conductor') badge = 'badge-cond';
+                    if(u.rol === 'Despachador') badge = 'badge-desp';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${u.id}</td>
+                            <td>${u.nombre_completo || '-'}</td>
+                            <td>${u.username}</td>
+                            <td><span class="badge ${badge}">${u.rol}</span></td>
+                            <td>
+                                <button class="btn-edit" onclick="editarUsuario(${u.id}, '${u.nombre_completo || ''}', '${u.username}', '${u.rol}')">Editar</button>
+                                <button class="btn-delete" onclick="eliminarUsuario(${u.id})">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        function editarUsuario(id, nombre, username, rol) {
+            document.getElementById('u-id').value = id;
+            document.getElementById('u-nombre').value = nombre;
+            document.getElementById('u-username').value = username;
+            document.getElementById('u-rol').value = rol;
+            document.getElementById('u-password').required = false; // Opcional al editar
+            
+            document.getElementById('form-user-title').innerText = "Editar Usuario (ID: " + id + ")";
+            document.getElementById('btn-save-user').innerText = "Actualizar";
+            document.getElementById('btn-cancel-user').style.display = 'inline-block';
+        }
+
+        function resetUserForm() {
+            document.getElementById('form-usuario').reset();
+            document.getElementById('u-id').value = "";
+            document.getElementById('u-password').required = true;
+            document.getElementById('form-user-title').innerText = "Añadir Nuevo Usuario";
+            document.getElementById('btn-save-user').innerText = "Guardar";
+            document.getElementById('btn-cancel-user').style.display = 'none';
+        }
+
+        function guardarUsuario(e) {
+            e.preventDefault();
+            const id = document.getElementById('u-id').value;
+            const payload = {
+                nombre_completo: document.getElementById('u-nombre').value,
+                username: document.getElementById('u-username').value,
+                rol: document.getElementById('u-rol').value,
+                password: document.getElementById('u-password').value
+            };
+
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/usuarios/${id}` : '/api/usuarios';
+            
+            if(!id && !payload.password) {
+                alert("La contraseña es obligatoria para nuevos usuarios.");
+                return;
+            }
+
+            fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(res => res.json()).then(data => {
+                if(data.error) alert(data.error);
+                else {
+                    resetUserForm();
+                    cargarUsuarios();
+                }
+            });
+        }
+
+        function eliminarUsuario(id) {
+            if(confirm("¿Estás seguro de eliminar a este usuario?")) {
+                fetch(`/api/usuarios/${id}`, { method: 'DELETE' })
+                .then(res => res.json()).then(data => {
+                    if(data.error) alert(data.error);
+                    else cargarUsuarios();
+                });
+            }
+        }
+
+        // --- FLOTA ---
+        function cargarFlota() {
+            fetch('/api/configuracion')
+            .then(res => res.json())
+            .then(data => {
+                const p = data.precios.find(e => e.tipo_combustible === 'Petroleo');
+                const g = data.precios.find(e => e.tipo_combustible === 'Gasolina');
+                if (p) document.getElementById('precio-petroleo').value = p.precio_galon_soles;
+                if (g) document.getElementById('precio-gasolina').value = g.precio_galon_soles;
+
+                const tbody = document.querySelector('#tabla-vehiculos tbody');
+                tbody.innerHTML = '';
+                data.vehiculos.forEach(v => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${v.id}</td><td>${v.marca}</td><td>${v.modelo}</td>
+                            <td><b>${v.placa || 'S/N'}</b></td><td>${v.capacidad_kg}</td>
+                            <td>${v.consumo_galon_km}</td><td>${v.tipo_combustible}</td>
+                            <td><button class="btn-delete" onclick="eliminarVehiculo(${v.id})">Eliminar</button></td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        function actualizarPrecio(tipo, inputId) {
+            const precio = document.getElementById(inputId).value;
+            fetch('/api/precios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tipo_combustible: tipo, precio_galon_soles: precio })
+            }).then(res => res.json()).then(data => {
+                alert(data.message || data.error);
+            });
+        }
+
+        function registrarVehiculo(e) {
+            e.preventDefault();
+            const vehiculo = {
+                marca: document.getElementById('v-marca').value,
+                modelo: document.getElementById('v-modelo').value,
+                placa: document.getElementById('v-placa').value.toUpperCase(),
+                capacidad_kg: document.getElementById('v-capacidad').value,
+                consumo_galon_km: document.getElementById('v-consumo').value,
+                tipo_combustible: document.getElementById('v-combustible').value
+            };
+            fetch('/api/vehiculos', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(vehiculo)
+            }).then(res => res.json()).then(data => {
+                if(data.error) alert(data.error);
+                else {
+                    document.getElementById('form-vehiculo').reset();
+                    cargarFlota();
+                }
+            });
+        }
+
+        function eliminarVehiculo(id) {
+            if(confirm("¿Eliminar vehículo?")) {
+                fetch(`/api/vehiculos/${id}`, { method: 'DELETE' }).then(() => cargarFlota());
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarViajes();
+        });
+    </script>
+</body>
+</html>

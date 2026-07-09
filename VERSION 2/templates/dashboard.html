@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMS Analytics Dashboard - Amazonas</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .dashboard-container { max-width: 1200px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .header h1 { color: #2c3e50; margin: 0; }
+        .btn-back { background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .kpi-container { display: flex; gap: 20px; margin-bottom: 30px; }
+        .kpi-card { flex: 1; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid #3498db; }
+        .kpi-card h3 { color: #7f8c8d; font-size: 0.9rem; margin: 0 0 10px 0; }
+        .kpi-card p { color: #2c3e50; font-size: 1.5rem; font-weight: bold; margin: 0; }
+        .charts-container { display: flex; gap: 20px; }
+        .chart-card { flex: 1; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>📊 TMS Analytics Dashboard</h1>
+            <a href="/" class="btn-back">⬅ Volver al Mapa</a>
+        </div>
+
+        <div class="kpi-container">
+            <div class="kpi-card" style="border-color: #2ecc71;">
+                <h3>Costo Operativo (Soles)</h3>
+                <p id="kpi-costo">S/ 0.00</p>
+            </div>
+            <div class="kpi-card" style="border-color: #f39c12;">
+                <h3>Carga Total (Kg)</h3>
+                <p id="kpi-carga">0 kg</p>
+            </div>
+            <div class="kpi-card" style="border-color: #9b59b6;">
+                <h3>Vehículo Asignado</h3>
+                <p id="kpi-vehiculo" style="font-size: 1.2rem;">Ninguno</p>
+            </div>
+            <div class="kpi-card" style="border-color: #e74c3c;">
+                <h3>Huella CO2 Simulada</h3>
+                <p id="kpi-co2">0 kg CO2</p>
+            </div>
+        </div>
+
+        {% if user_role and user_role|lower != 'conductor' %}
+        <div class="charts-container">
+            <div class="chart-card">
+                <canvas id="distanciaChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="tiempoChart"></canvas>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dataStr = localStorage.getItem('tms_resultados');
+            if (!dataStr) {
+                alert("No hay datos recientes. Calcula una ruta en el mapa primero.");
+                return;
+            }
+            
+            const data = JSON.parse(dataStr);
+            const comp = data.comparativa || [];
+            const tms = data.tms || {};
+            
+            // 1. Llenar KPIs (Asumiremos los datos del mejor algoritmo, que está en la primera posición por el Merge Sort)
+            const ganador = comp[0] || {};
+            const costo = ganador.costo_operativo_soles || 0;
+            document.getElementById('kpi-costo').innerText = `S/ ${costo.toFixed(2)}`;
+            document.getElementById('kpi-carga').innerText = `${tms.carga_total_kg || 0} kg`;
+            
+            if (tms.vehiculo_asignado) {
+                const placa = tms.vehiculo_asignado.placa ? ` [${tms.vehiculo_asignado.placa}]` : '';
+                document.getElementById('kpi-vehiculo').innerText = `${tms.vehiculo_asignado.marca} ${tms.vehiculo_asignado.modelo}${placa}`;
+            }
+            
+            // CO2 simulado = 2.6 kg CO2 por litro quemado (aprox). Distancia (km) * consumo_galon_km * 3.785 * 2.6
+            if (ganador.distancia_km && tms.vehiculo_asignado) {
+                const galones = ganador.distancia_km * tms.vehiculo_asignado.consumo_galon_km;
+                const co2 = galones * 3.785 * 2.6;
+                document.getElementById('kpi-co2').innerText = `${co2.toFixed(1)} kg CO2`;
+            }
+
+            // 2. Extraer datos para los gráficos
+            const labels = comp.map(c => c.algoritmo);
+            // Reemplazar los N/A con 0 para los gráficos
+            const distancias = comp.map(c => typeof c.distancia_km === 'number' ? c.distancia_km : 0);
+            const tiempos = comp.map(c => typeof c.tiempo_seg === 'number' ? c.tiempo_seg : 0);
+
+            // 3. Renderizar Gráfico de Distancias
+            const canvasDist = document.getElementById('distanciaChart');
+            if (canvasDist) {
+                new Chart(canvasDist, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Distancia Recorrida (Km)',
+                            data: distancias,
+                            backgroundColor: '#3498db',
+                            borderRadius: 4
+                        }]
+                    },
+                    options: { responsive: true, plugins: { title: { display: true, text: 'Comparativa de Distancias por Algoritmo' } } }
+                });
+            }
+
+            // 4. Renderizar Gráfico de Tiempos
+            const canvasTiempo = document.getElementById('tiempoChart');
+            if (canvasTiempo) {
+                new Chart(canvasTiempo, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tiempo de CPU (Segundos)',
+                            data: tiempos,
+                            backgroundColor: '#e74c3c',
+                            borderRadius: 4
+                        }]
+                    },
+                    options: { responsive: true, plugins: { title: { display: true, text: 'Rendimiento de Procesamiento (Tiempo CPU)' } } }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

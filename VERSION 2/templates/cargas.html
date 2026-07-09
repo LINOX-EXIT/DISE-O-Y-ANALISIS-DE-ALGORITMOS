@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Cargas - TMS Amazonas</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/icono.png') }}?v=2">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 900px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
+        .header h1 { color: #2c3e50; margin: 0; }
+        .btn-back { background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        
+        .section-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .section-card h2 { margin-top: 0; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #7f8c8d; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: inherit; font-size: 1rem; }
+        .btn-submit { background: #27ae60; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-submit:hover { background: #2ecc71; }
+        .btn-delete { background: #e74c3c; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #27ae60; color: white; }
+
+        /* MODAL ANIMADO DE ÉXITO */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); display: flex; 
+            justify-content: center; align-items: center; z-index: 9999;
+            opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: white; padding: 30px 50px; border-radius: 12px;
+            text-align: center; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            transform: scale(0.7); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
+        .checkmark-circle {
+            stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 3; stroke-miterlimit: 10;
+            stroke: #27ae60; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; stroke-width: 3;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards; stroke: #27ae60;
+        }
+        .checkmark-svg {
+            width: 70px; height: 70px; border-radius: 50%; display: block;
+            margin: 0 auto 15px auto;
+            animation: scale 0.3s ease-in-out 0.9s both;
+        }
+        @keyframes stroke { 100% { stroke-dashoffset: 0; } }
+        @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
+
+        .modal-btn {
+            margin-top: 20px; background: #27ae60; color: white; border: none;
+            padding: 10px 25px; border-radius: 25px; cursor: pointer; font-weight: bold;
+            font-size: 14px; transition: 0.2s; outline: none;
+        }
+        .modal-btn:hover { background: #219653; transform: scale(1.05); }
+
+        /* Arc Spinner (Cargando) */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .arc {
+            border-top-color: #22c55e !important;
+            border-right-color: #22c55e !important;
+            animation: spin .9s linear infinite;
+            width: 70px; height: 70px; border: 4px solid transparent; 
+            border-radius: 50%; margin: 0 auto 15px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Gestión de Cargas (Fincas)</h1>
+            <div style="display: flex; gap: 10px;">
+                {% if user_role != 'Despachador' %}
+                <a href="/" class="btn-back">⬅ Volver al Mapa</a>
+                {% endif %}
+                <a href="/logout" style="background: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Cerrar Sesión</a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Asignar Carga Diaria</h2>
+            <form id="form-carga" onsubmit="registrarCarga(event)" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: end;">
+                <div class="form-group" style="flex: 1; min-width: 150px;">
+                    <label>Fecha de Recolección:</label>
+                    <input type="date" id="c-fecha" required>
+                </div>
+                <div class="form-group" style="flex: 1; min-width: 200px;">
+                    <label>Provincia (Zona):</label>
+                    <select id="c-provincia" onchange="cargarFincasDeProvincia()" required>
+                        <option value="">-- Seleccione una zona --</option>
+                        <option value="PUNTOS CHACHAPOYAS.kml">Chachapoyas</option>
+                        <option value="PUNTOS BAGUA.kml">Bagua</option>
+                        <option value="PUNTOS BONGARA.kml">Bongará</option>
+                        <option value="PUNTOS LUYA.kml">Luya</option>
+                        <option value="PUNTOS RODRIGUEZ DE MENDOZA.kml">Rodríguez de Mendoza</option>
+                        <option value="PUNTOS UCTUBAMBA.kml">Utcubamba</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 2; min-width: 200px;">
+                    <label>Nombre de la Finca:</label>
+                    <select id="c-finca" required>
+                        <option value="">-- Seleccione primero una zona --</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1; min-width: 120px;">
+                    <label>Cantidad (Kg):</label>
+                    <input type="number" id="c-cantidad" required min="1">
+                </div>
+                <div class="form-group" style="flex: 1; min-width: 150px;">
+                    <button type="submit" class="btn-submit">➕ Guardar Carga</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="section-card">
+            <h2>Historial de Cargas Registradas</h2>
+            <table id="tabla-cargas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>
+                            Fecha
+                            <input type="date" id="filter-fecha" onchange="aplicarFiltros()" style="display:block; width:100%; margin-top:5px; font-size:12px; padding:2px; border-radius:3px; border: none; color: black;">
+                        </th>
+                        <th>Finca</th>
+                        <th>Cantidad (Kg)</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Llenado dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL DE CARGA / ÉXITO -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <!-- Spinner -->
+            <div id="loadingIcon" class="arc"></div>
+
+            <!-- Checkmark -->
+            <svg id="successIcon" style="display:none;" class="checkmark-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+            </svg>
+            
+            <h3 style="margin:0; color:#2c3e50; font-family:'Segoe UI',sans-serif;" id="modalMessage">Guardando...</h3>
+            <button id="modalBtn" class="modal-btn" style="display:none;" onclick="cerrarModal()">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        let cargasGlobal = [];
+
+        // Inicializar fecha de hoy por defecto
+        document.getElementById('c-fecha').valueAsDate = new Date();
+
+        function cargarDatos() {
+            fetch('/api/cargas')
+                .then(res => res.json())
+                .then(data => {
+                    cargasGlobal = data;
+                    aplicarFiltros();
+                })
+                .catch(err => console.error("Error cargando historial de cargas:", err));
+        }
+
+        function aplicarFiltros() {
+            const valFecha = document.getElementById('filter-fecha').value;
+
+            const filtrados = cargasGlobal.filter(c => {
+                let strDate = formatearFecha(c.fecha);
+                const matchFecha = valFecha === "" || strDate === valFecha;
+                return matchFecha;
+            });
+
+            renderizarTabla(filtrados);
+        }
+
+        function formatearFecha(dateStr) {
+            // Flask envía las fechas (DATE de postgres) en formato GMT: "Wed, 08 Jul 2026 00:00:00 GMT"
+            // Para evitar que la zona horaria local le reste un día, extraemos los componentes en UTC.
+            const d = new Date(dateStr);
+            const yyyy = d.getUTCFullYear();
+            const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+            const dd = String(d.getUTCDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
+
+        function renderizarTabla(cargasFiltradas) {
+            const tbody = document.querySelector('#tabla-cargas tbody');
+            tbody.innerHTML = '';
+            
+            if (cargasFiltradas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#7f8c8d;">No hay cargas registradas que coincidan con la búsqueda.</td></tr>';
+                return;
+            }
+
+            cargasFiltradas.forEach(c => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${c.id}</td>
+                        <td>${formatearFecha(c.fecha)}</td>
+                        <td>${c.finca_nombre}</td>
+                        <td><b>${c.cantidad_kg} Kg</b></td>
+                        <td><button class="btn-delete" onclick="eliminarCarga(${c.id})">Eliminar</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function cargarFincasDeProvincia() {
+            const archivoKml = document.getElementById('c-provincia').value;
+            const selectFinca = document.getElementById('c-finca');
+            
+            if (!archivoKml) {
+                selectFinca.innerHTML = '<option value="">-- Seleccione primero una zona --</option>';
+                return;
+            }
+
+            selectFinca.innerHTML = '<option value="">Cargando fincas...</option>';
+
+            fetch('/api/cargar-kml', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ archivo: archivoKml })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    selectFinca.innerHTML = '<option value="">-- Error al cargar --</option>';
+                    return;
+                }
+                
+                selectFinca.innerHTML = '<option value="">-- Seleccione la Finca --</option>';
+                // data es un array de {nombre, lat, lng}
+                // Asumimos que el primer elemento suele ser la Empresa (partida), pero lo listamos por si acaso
+                data.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.nombre;
+                    option.textContent = p.nombre;
+                    selectFinca.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error("Error obteniendo KML:", err);
+                selectFinca.innerHTML = '<option value="">-- Error de red --</option>';
+            });
+        }
+
+        function registrarCarga(e) {
+            e.preventDefault();
+            const cargaPayload = {
+                fecha: document.getElementById('c-fecha').value,
+                cargas: [
+                    {
+                        finca_nombre: document.getElementById('c-finca').value,
+                        cantidad_kg: document.getElementById('c-cantidad').value
+                    }
+                ]
+            };
+
+            // Mostrar modal en estado "Guardando..."
+            document.getElementById('modalMessage').innerText = "Guardando datos...";
+            document.getElementById('loadingIcon').style.display = "block";
+            document.getElementById('successIcon').style.display = "none";
+            document.getElementById('modalBtn').style.display = "none";
+            document.getElementById('successModal').classList.add('active');
+
+            fetch('/api/guardar-carga-diaria', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cargaPayload)
+            }).then(res => res.json()).then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    cerrarModal();
+                } else {
+                    document.getElementById('modalMessage').innerText = data.message || "Carga registrada correctamente.";
+                    document.getElementById('loadingIcon').style.display = "none";
+                    document.getElementById('successIcon').style.display = "block";
+                    document.getElementById('modalBtn').style.display = "inline-block";
+                }
+                // Resetear form pero dejar la fecha y la provincia intactas por comodidad
+                document.getElementById('c-finca').value = '';
+                document.getElementById('c-cantidad').value = '';
+                cargarDatos();
+            }).catch(err => {
+                console.error(err);
+                alert("Error de conexión");
+                cerrarModal();
+            });
+        }
+
+        function cerrarModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        function eliminarCarga(id) {
+            if (confirm("¿Estás seguro de eliminar este registro de carga?")) {
+                fetch(`/api/cargas/${id}`, { method: 'DELETE' })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        cargarDatos();
+                    });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', cargarDatos);
+    </script>
+</body>
+</html>

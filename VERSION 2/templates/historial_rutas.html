@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Rutas - TMS Amazonas</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}?v=2">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 900px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .header h1 { color: #2c3e50; margin: 0; display: flex; align-items: center; gap: 10px;}
+        
+        .nav-links a { background: #34495e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-left: 10px;}
+        
+        .section-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
+        .badge-progreso { background-color: #f39c12; }
+        .badge-finalizado { background-color: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><img src="{{ url_for('static', filename='img/icono.png') }}" style="height: 40px; border-radius: 5px;"> Mi Historial de Rutas</h1>
+            <div class="nav-links">
+                <a href="/rutas">Volver al Mapa</a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Vehículo</th>
+                        <th>Carga Total (Kg)</th>
+                        <th>Hora de Inicio</th>
+                        <th>Hora de Fin</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in viajes %}
+                    <tr>
+                        <td>{{ v.fecha.strftime('%d/%m/%Y') if v.fecha else '-' }}</td>
+                        <td>{{ v.marca }} {{ v.modelo }} [{{ v.placa }}]</td>
+                        <td>{{ v.kg_totales }} kg</td>
+                        <td>{{ v.hora_inicio.strftime('%H:%M:%S') if v.hora_inicio else '-' }}</td>
+                        <td>{{ v.hora_fin.strftime('%H:%M:%S') if v.hora_fin else '-' }}</td>
+                        <td>
+                            {% if v.estado == 'en_progreso' %}
+                            <span class="badge badge-progreso">En Progreso</span>
+                            {% else %}
+                            <span class="badge badge-finalizado">Finalizado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #7f8c8d; padding: 20px;">No has realizado ninguna ruta todavía.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

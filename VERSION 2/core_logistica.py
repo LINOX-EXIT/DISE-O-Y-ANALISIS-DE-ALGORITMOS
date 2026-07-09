@@ -1,6 +1,7 @@
 import os
 import requests
 import itertools
+import math
 from pykml import parser
 
 def extraer_datos_kml(ruta_archivo):
@@ -28,6 +29,15 @@ def extraer_datos_kml(ruta_archivo):
             
     return puntos
 
+def haversine(lat1, lon1, lat2, lon2):
+    """Calcula la distancia en línea recta en metros entre dos coordenadas."""
+    R = 6371000
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lon2 - lon1)
+    a = math.sin(dphi/2.0)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda/2.0)**2
+    return R * (2 * math.atan2(math.sqrt(a), math.sqrt(1 - a)))
+
 def obtener_matriz_osrm_metros(puntos):
     """Consulta a OSRM y devuelve la matriz de distancias viales en metros."""
     if not puntos:
@@ -36,14 +46,29 @@ def obtener_matriz_osrm_metros(puntos):
     coords_str = ";".join([f"{p['lng']},{p['lat']}" for p in puntos])
     url = f"http://router.project-osrm.org/table/v1/driving/{coords_str}?annotations=distance"
     
+    matriz = None
     try:
-        response = requests.get(url).json()
-        if response.get('code') == 'Ok':
-            return response['distances']
-        return None
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('code') == 'Ok':
+                matriz = data['distances']
+        else:
+            print(f"OSRM bloqueó o rechazó la petición: HTTP {response.status_code}")
     except Exception as e:
         print(f"Error de conexión con OSRM: {e}")
-        return None
+        
+    # FALLBACK: Si falla OSRM público, usar distancias matemáticas (Haversine)
+    if not matriz:
+        print("Activando Fallback: Usando Distancia Matemática (Haversine)")
+        n = len(puntos)
+        matriz = [[0]*n for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                if i != j:
+                    matriz[i][j] = haversine(puntos[i]['lat'], puntos[i]['lng'], puntos[j]['lat'], puntos[j]['lng'])
+                    
+    return matriz
 
 # --- A. ALGORITMO VORAZ ---
 def algoritmo_voraz(matriz, inicio):
